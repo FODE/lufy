@@ -1,0 +1,52 @@
+package com.corner.lufy;
+
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+/**
+ * http server
+ * @author Lei.Sang
+ *
+ */
+public class Server {
+	private static final int PORT = 9111;
+
+	public static void main(String[] args) {
+		new Server().startup();
+	}
+	
+	/**
+	 * startup the server
+	 */
+	public void startup() {
+		ServerSocket server = null;
+		Socket socket = null;
+		try {
+			//start a server
+			server = new ServerSocket(PORT);
+			System.out.println("Server started on port:[" + PORT + "]");
+			//start a thread pool
+			ExecutorService exec = Executors.newFixedThreadPool(50);
+			int userNumber = 0;
+			while(true) {
+				socket = server.accept();
+				System.out.println("accept [" + (++userNumber) + "] user!");
+				//submit a request to RequestHandler
+				exec.execute(new RequestHandler(socket));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+				try {
+					if(null != server && !server.isClosed())
+						server.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		}
+	}
+	
+}
