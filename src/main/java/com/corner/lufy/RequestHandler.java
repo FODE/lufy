@@ -79,7 +79,7 @@ public class RequestHandler implements Runnable{
 	 * @param filePath
 	 * @throws Exception 
 	 */
-	private void response(String filePath) throws Exception {
+	public void response(String filePath) throws Exception {
 		processResponse(filePath, getContentTypeByFile());
 	}
 	
@@ -98,6 +98,9 @@ public class RequestHandler implements Runnable{
 			}
 			//get file input stream
 			File file = new File(filePath);
+			if(!file.exists()) {
+				file = new File(BASE_DOC + "/404.html");
+			}
 			byte[] buffer = new byte[(int)file.length()];
 			dis = new DataInputStream(new FileInputStream(file));
 			
