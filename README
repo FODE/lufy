@@ -2,5 +2,6 @@ this is a simple HTTP server implemented in JAVA named "lufy"(a hero in one piec
 
 just run "Server.java" and you can browse the files in WEN-INF directory with browser(chrome, firefox etc.).
 
-default port is 9111, you can config port in "Server.java". 
+default port is 9111, you can config port in "Server.java".
+hello!
 
